@@ -1,4 +1,4 @@
-# 2025_ID_BubbleMap
+# Bubble Map - 2025
 
 ## 💻 Touches
 - Clique molette (maintenir) : Fonctionnalité permettant de se déplacer au seins de la BubbleMap.

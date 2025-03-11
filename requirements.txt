@@ -1,0 +1,5 @@
+﻿Bibliothèque utilisé :
+Pygames
+Math
+                       
+version EduPython : 3.14

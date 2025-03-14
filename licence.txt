@@ -1,4 +1,4 @@
-Copyright (C) [2025] [Pipelier Théo,Raimbault Romain,Tempérault Léandre,Roquain Remy]
+Copyright (C) [2025] [Pipelier Théo,Raimbault Romain,Tempérault Léandre,Roquain Rémy]
 
 Ce programme est un logiciel libre ; vous pouvez le redistribuer et/ou le modifier selon les termes de la Licence Publique Générale GNU publiée par la Free Software Foundation ; soit la version 3 de la licence, soit (à votre choix) toute version ultérieure.
 

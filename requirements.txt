@@ -1,5 +1,4 @@
-﻿Bibliothèque utilisé :
-Pygames
-Math
-                       
-version EduPython : 3.14
+mysql==0.0.3
+mysql-connector==2.2.9
+mysqlclient==2.2.7
+pygame==2.6.1

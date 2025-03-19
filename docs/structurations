@@ -1,2 +1,3 @@
-Le projet nécessite 2 fichiers, une base de donnée (art_nsi.sql) et un programme python (BubbleMap.py). Le code n'est pas découpé en plusieurs fichiers et ne fonctionne
-pas sans que la base de donnée aie été importée dans phpMyAdmins sur la console sql en ayant rentré la commande use avec le nom de la base (utilisation du logiciel WampServer).
+Le projet nécessite 2 fichiers, une base de donnée (art_nsi.sql) et un programme python (main.py). Le code n'est pas découpé en plusieurs fichiers et ne 
+fonctionne pas sans que la base de donnée aie été importée dans phpMyAdmins sur la console sql en ayant rentré la commande use avec le nom de la base (utilisation du 
+logiciel WampServer).

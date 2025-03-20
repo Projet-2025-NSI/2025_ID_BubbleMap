@@ -284,6 +284,7 @@ while boucle==True:
                     dy = event.pos[1] - bulle_cible.y
                     if math.sqrt(dx ** 2 + dy ** 2) <= bulle_cible.rayon and bulle_cible.profondeur>2: #les bulles ont un détail à afficher à partir d'une profondeur de 2
                         detail_ouvert=True
+                        deplacement=False                               #on désactive le déplacement pour éviter les bugs
                         bulle_principale.bulle_detail=bulle_cible
 
 

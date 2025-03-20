@@ -31,9 +31,11 @@ position_interface = [0, 0]
 facteur_zoom = 1.0
 detail_ouvert=False
 
-def connexion_db(): #connnexion à la BD
-    conn = mysql.connector.connect(host="localhost",user="root",password="",database="art_nsi")
-    return conn
+
+## FONCTIONS
+def connexion_bd(): #connnexion à la BD
+    connexion = mysql.connector.connect(host="localhost",user="root",password="",database="art_nsi")
+    return connexion
 
 def coupe_texte(texte, font, largeur_ligne_max):
     #la fonction prend un texte, une police et une largeur maximale de ligne et renvoie une liste du textes découpés en lignes
@@ -54,6 +56,7 @@ def coupe_texte(texte, font, largeur_ligne_max):
 
     return lignes
 
+## CLASSE
 class Bulle:
     def __init__(self,x,y,rayon,texte,profondeur,parent=None, id_periode=None,bulle_detail=None):
         self.x=x
@@ -69,7 +72,7 @@ class Bulle:
 
     ### METHODES DE GESTION DES BULLES
     def zoomer(self, facteur):
-        #méthode récursive pour grossir les 
+        #méthode récursive pour grossir les rayons des bulles et leurs distances
         self.rayon *= facteur
         self.x = width // 2 + (self.x - width // 2) * facteur
         self.y = height // 2 + (self.y - height // 2) * facteur
@@ -91,12 +94,12 @@ class Bulle:
                 distance_min = distance_candidate
         return bulle_plus_proche
 
-    def deplacer(self,dx,dy):
+    def deplacer(self,new_x,new_y):
         #méthode récursive qui déplace les centres des bulles
-        self.x+=dx
-        self.y+=dy
+        self.x+=new_x
+        self.y+=new_y
         for sous_bulle in self.sous_bulles:
-            sous_bulle.deplacer(dx,dy)
+            sous_bulle.deplacer(new_x,new_y)
 
     def afficher_cacher_sous_bulles(self):
         #méthode qui désactive une bulle et toutes sous-bulles
@@ -115,11 +118,9 @@ class Bulle:
     def ajouter_sous_bulles(self):
         #méthode qui permet de trouver dans la base de donnée les éléments à afficher dans les sous-bulles d'une bulle pour les ajouter en tant que bulles "filles" avec tous leurs paramètres
         if not self.sous_bulles and self.profondeur<5:
-            conn = connexion_db()
-            if not conn:
-                return
+            connexion = connexion_bd()
 
-            cursor = conn.cursor()
+            cursor = connexion.cursor()
             #on utilise un dictionnaire pour ne pas répéter tout le code d'ajout des bulles (améliore la lisibilité du code)
             dico_requete={1:"SELECT id_Periodes, Periode FROM periodes;",
                           2:"SELECT nomMouvement_M FROM musiques WHERE id_Periodes = "+str(self.id_periode)+" UNION SELECT nomMouvement_VP FROM visuels_et_plastiques WHERE id_Periodes = "+str(self.id_periode)+";",
@@ -182,7 +183,7 @@ class Bulle:
                 new_x=self.x+distance*math.cos(angle)
                 new_y=self.y+distance*math.sin(angle)
                 self.sous_bulles.append(Bulle(new_x, new_y,bulle_principale.rayon/(2**self.profondeur), dico_textes[self.profondeur], self.profondeur+1, parent=self, id_periode=id_periode))
-            conn.close()
+            connexion.close()
 
     ###METHODES DE DESSIN DE L'INTERFACE
     def dessiner_liens(self):
@@ -211,11 +212,11 @@ class Bulle:
         hauteur_totale_texte=0
         if len(lignes)>1:
             hauteur_totale_texte = len(lignes) * taille_texte
-        y_start = self.y - (hauteur_totale_texte//2) #on enregistre le point de départ du texte en fonction de la hauteur qu'il prend
+        y_depart = self.y - (hauteur_totale_texte//2) #on enregistre le point de départ du texte en fonction de la hauteur qu'il prend
         
         for i in range(len(lignes)): #on affiche les lignes du texte une par une
             text = font.render(lignes[i], True, TEXTE)
-            text_rect = text.get_rect(center=(self.x, y_start + i * taille_texte))
+            text_rect = text.get_rect(center=(self.x, y_depart + i * taille_texte))
             screen.blit(text, text_rect)
 
         if self.active == True: #on relance la méthode sur les sous-bulles si la bulle est active
@@ -231,8 +232,8 @@ class Bulle:
         pygame.draw.rect(screen,BULLE_SIMPLE, (rectangle_x,rectangle_y, rectangle_largeur, rectangle_hauteur),border_radius=30)
 
         requete="SELECT detailMouvement_VP from visuels_et_plastiques where nomMouvement_VP = \'"+bulle_principale.bulle_detail.texte+"\' union select detailMouvement_M from musiques where nomMouvement_M = \'"+bulle_principale.bulle_detail.texte+"\' union select detailOeuvre from oeuvres where nomOeuvre=\'"+bulle_principale.bulle_detail.texte+"\' union select Biographies from artistes where nomArtistes=\'"+bulle_principale.bulle_detail.texte+"\';"
-        conn = connexion_db()
-        cursor = conn.cursor()
+        connexion = connexion_bd()
+        cursor = connexion.cursor()
         cursor.execute(requete)
         resultat = cursor.fetchone()
 
@@ -252,6 +253,7 @@ class Bulle:
 bulle_principale=Bulle(width // 2, height // 2, 128,"Art",1)
 
 
+## BOUCLE PRINCIPALE
 boucle=True
 while boucle==True:
     for event in pygame.event.get():

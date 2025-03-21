@@ -9,4 +9,4 @@ Développé sous python 3.11.9 sur Visual Studio Code
 - **Molette avant/arrière :** Zoomer/Dézoomer la BubbleMap.
 
 Schéma relationnel de la base de données
-![modem](images/schema_BD.png "modem")
+![modem](images/schema_BD.PNG "modem")

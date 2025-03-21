@@ -1,6 +1,6 @@
 # Bubble Map - 2025
 
-Développé sous python 3.11.9 sur Visual Studio Code
+Développé sous [python](https://www.python.org/downloads/) 3.11.9 sur Visual Studio Code
 
 ## 💻 Touches
 - **Clique molette (maintenir) :** Déplacement dans la BubbleMap.

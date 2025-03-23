@@ -1,4 +1,4 @@
 Le projet nécessite 3 fichiers, la base de donnée (art_nsi.sql), le programme python (main.py) et l'icône (BM.png). L'image BM.png doit être dans le dossier utilisateur
 du PC (C:\Users). 
 Le code n'est pas découpé en plusieurs fichiers mais ne fonctionne pas sans que la base de donnée aie été importée dans phpMyAdmins sur la console sql en ayant rentré 
-la commande use avec le nom de la base (utilisation du logiciel WampServer).
+la commande "use <nom de la BD>;" (utilisation du logiciel WampServer).
